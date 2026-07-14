@@ -40,19 +40,25 @@ Built as **Task 2** of the CodeAlpha AI Internship.
 
 <table>
 <tr>
-<td width="50%"><img src="docs/screenshots/landing-page.png" alt="Landing page"></td>
-<td width="50%"><img src="docs/screenshots/chatbot-welcome.png" alt="Chatbot welcome state"></td>
+<td width="50%"><img src="docs/screenshots/homepage-light.png" alt="FAQAI homepage in light mode"></td>
+<td width="50%"><img src="docs/screenshots/chatbot-light.png" alt="Chatbot page in light mode"></td>
 </tr>
 <tr>
-<td align="center"><sub>Landing page</sub></td>
-<td align="center"><sub>Chatbot — welcome state</sub></td>
+<td align="center"><sub>Homepage — light mode</sub></td>
+<td align="center"><sub>Chatbot — light mode</sub></td>
 </tr>
 </table>
 
-<p align="center">
-<img src="docs/screenshots/chatbot-conversation.png" alt="Chatbot active conversation" width="70%">
-<br><sub>Chatbot — active conversation with live confidence scores</sub>
-</p>
+<table>
+<tr>
+<td width="50%"><img src="docs/screenshots/chatbot-search.png" alt="Chatbot search UI"></td>
+<td width="50%"><img src="docs/screenshots/homepage-dark.png" alt="FAQAI homepage in dark mode"></td>
+</tr>
+<tr>
+<td align="center"><sub>Chatbot — search panel</sub></td>
+<td align="center"><sub>Homepage — dark mode</sub></td>
+</tr>
+</table>
 
 ---
 
