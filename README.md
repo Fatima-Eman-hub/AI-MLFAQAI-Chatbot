@@ -22,7 +22,6 @@ Built as **Task 2** of the CodeAlpha AI Internship.
 
 ## Table of Contents
 
-- [Screenshots](#-screenshots)
 - [Features](#-features)
 - [Tech Stack](#-tech-stack)
 - [Project Structure](#-project-structure)
@@ -33,32 +32,6 @@ Built as **Task 2** of the CodeAlpha AI Internship.
 - [Deployment](#%EF%B8%8F-deployment)
 - [Documentation](#-documentation)
 - [Acknowledgments](#-acknowledgments)
-
----
-
-## 📸 Screenshots
-
-<table>
-<tr>
-<td width="50%"><img src="docs/screenshots/homepage-light.png" alt="FAQAI homepage in light mode"></td>
-<td width="50%"><img src="docs/screenshots/chatbot-light.png" alt="Chatbot page in light mode"></td>
-</tr>
-<tr>
-<td align="center"><sub>Homepage — light mode</sub></td>
-<td align="center"><sub>Chatbot — light mode</sub></td>
-</tr>
-</table>
-
-<table>
-<tr>
-<td width="50%"><img src="docs/screenshots/chatbot-search.png" alt="Chatbot search UI"></td>
-<td width="50%"><img src="docs/screenshots/homepage-dark.png" alt="FAQAI homepage in dark mode"></td>
-</tr>
-<tr>
-<td align="center"><sub>Chatbot — search panel</sub></td>
-<td align="center"><sub>Homepage — dark mode</sub></td>
-</tr>
-</table>
 
 ---
 
