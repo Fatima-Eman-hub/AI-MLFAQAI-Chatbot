@@ -1,0 +1,128 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* Brand violet scale — deliberately deeper/richer than default Tailwind indigo/purple */
+  --color-brand-50: #f4f1ff;
+  --color-brand-100: #e9e3ff;
+  --color-brand-200: #d1c4ff;
+  --color-brand-300: #b39dff;
+  --color-brand-400: #9370ff;
+  --color-brand-500: #7048ff;
+  --color-brand-600: #5b2fef;
+  --color-brand-700: #4a24c9;
+  --color-brand-800: #3c1ea3;
+  --color-brand-900: #2c1678;
+
+  --color-accent-glow: #9370ff;
+}
+
+:root {
+  --bg-base: #faf9fd;
+  --bg-elevated: #ffffff;
+  --bg-subtle: #f1edfb;
+  --text-primary: #17142a;
+  --text-secondary: #5c5675;
+  --text-muted: #8a84a0;
+  --border-subtle: #e6e1f7;
+  --border-strong: #d3caf2;
+}
+
+.dark {
+  --bg-base: #0a0914;
+  --bg-elevated: #14121f;
+  --bg-subtle: #17152a;
+  --text-primary: #f3f1fb;
+  --text-secondary: #b3adc9;
+  --text-muted: #7d768f;
+  --border-subtle: #262238;
+  --border-strong: #33304a;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+::selection {
+  background-color: var(--color-brand-300);
+  color: #17142a;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Glassmorphic surface: frosted, translucent, softly glowing purple edge */
+.surface-card {
+  background-color: color-mix(in srgb, var(--bg-elevated) 66%, transparent);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid color-mix(in srgb, var(--color-brand-400) 22%, var(--border-subtle));
+  box-shadow:
+    inset 0 1px 0 0 color-mix(in srgb, white 10%, transparent),
+    0 8px 30px -10px color-mix(in srgb, var(--color-brand-500) 22%, transparent),
+    0 0 40px -18px var(--color-brand-400);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+.surface-card:hover {
+  border-color: color-mix(in srgb, var(--color-brand-400) 45%, var(--border-subtle));
+  box-shadow:
+    inset 0 1px 0 0 color-mix(in srgb, white 12%, transparent),
+    0 12px 36px -10px color-mix(in srgb, var(--color-brand-500) 32%, transparent),
+    0 0 56px -16px var(--color-brand-400);
+}
+
+/* Glowing glass icon bubble, echoes the reference control-center icons */
+.icon-glow {
+  background: color-mix(in srgb, var(--color-brand-400) 16%, var(--bg-elevated) 70%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid color-mix(in srgb, var(--color-brand-400) 35%, transparent);
+  box-shadow:
+    inset 0 1px 0 0 color-mix(in srgb, white 25%, transparent),
+    0 0 22px -4px var(--color-brand-400);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+.text-muted {
+  color: var(--text-muted);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brand-400);
+  outline-offset: 2px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-base);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-brand-400);
+}
