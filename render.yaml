@@ -1,0 +1,21 @@
+# Render deployment reference (optional — you can also configure these
+# settings manually in the Render dashboard instead of using this file).
+#
+# If you use this file: Render Dashboard → New → Blueprint → point at this repo.
+# Otherwise, just use the manual settings documented in the README / deployment guide.
+
+services:
+  - type: web
+    name: faqai-backend
+    runtime: python
+    rootDir: backend
+    buildCommand: "pip install -r requirements.txt && python -m nltk.downloader punkt punkt_tab stopwords wordnet omw-1.4"
+    startCommand: "uvicorn app.main:app --host 0.0.0.0 --port $PORT"
+    plan: free
+    envVars:
+      - key: ENV
+        value: production
+      - key: SIMILARITY_THRESHOLD
+        value: "0.25"
+      - key: ALLOWED_ORIGINS
+        sync: false
