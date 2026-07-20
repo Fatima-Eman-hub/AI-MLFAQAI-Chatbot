@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List, Optional
 from pydantic import BaseModel, Field, field_validator
 
 
@@ -13,12 +13,19 @@ class ChatRequest(BaseModel):
         return v.strip()
 
 
+class RelatedQuestion(BaseModel):
+    id: int
+    question: str
+    category: Optional[str] = None
+
+
 class ChatResponse(BaseModel):
     matched: bool
     answer: str
     question: Optional[str] = None
     category: Optional[str] = None
     confidence: float
+    related_questions: List[RelatedQuestion] = []
 
 
 class FAQItem(BaseModel):

@@ -50,7 +50,7 @@ export default function ChatWindow({ messages, isLoading, sendMessage, clearChat
       {/* Messages */}
       <div ref={scrollRef} className="flex-1 space-y-5 overflow-y-auto px-3 py-5 sm:px-5 sm:py-6">
         {messages.map((message) => (
-          <ChatBubble key={message.id} message={message} />
+          <ChatBubble key={message.id} message={message} onAskRelated={sendMessage} disabled={isLoading} />
         ))}
         {isLoading && <TypingIndicator />}
       </div>

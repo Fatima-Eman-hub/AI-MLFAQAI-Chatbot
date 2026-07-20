@@ -4,3 +4,4 @@ scikit-learn==1.5.2
 nltk==3.9.1
 pydantic==2.9.2
 python-dotenv==1.0.1
+slowapi==0.1.9

@@ -69,15 +69,19 @@ export function useChat() {
         matched: response.matched,
         confidence: response.confidence,
         category: response.category,
+        relatedQuestions: response.related_questions || [],
         timestamp: new Date().toISOString(),
       };
       setMessages((prev) => [...prev, botMessage]);
     } catch (err) {
       const isNetworkError = !err.response;
+      const isRateLimited = err.response?.status === 429;
       const errorMessage = {
         id: nextId(),
         role: "bot",
-        text: isNetworkError
+        text: isRateLimited
+          ? "You're sending messages a bit fast — please wait a moment and try again."
+          : isNetworkError
           ? "Couldn't reach the server. Make sure the backend is running, then try again."
           : "Something went wrong on my end. Please try again in a moment.",
         matched: false,

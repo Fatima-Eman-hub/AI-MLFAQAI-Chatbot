@@ -9,7 +9,7 @@ services:
     name: faqai-backend
     runtime: python
     rootDir: backend
-    buildCommand: "pip install -r requirements.txt && python -m nltk.downloader punkt punkt_tab stopwords wordnet omw-1.4"
+    buildCommand: "pip install -r requirements.txt && python -m nltk.downloader punkt punkt_tab stopwords"
     startCommand: "uvicorn app.main:app --host 0.0.0.0 --port $PORT"
     plan: free
     envVars:

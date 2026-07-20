@@ -22,6 +22,7 @@ Built as **Task 2** of the CodeAlpha AI Internship.
 
 ## Table of Contents
 
+- [Screenshots](#-screenshots)
 - [Features](#-features)
 - [Tech Stack](#-tech-stack)
 - [Project Structure](#-project-structure)
@@ -35,6 +36,26 @@ Built as **Task 2** of the CodeAlpha AI Internship.
 
 ---
 
+## 📸 Screenshots
+
+<table>
+<tr>
+<td width="50%"><img src="docs/screenshots/landing-page.png" alt="Landing page"></td>
+<td width="50%"><img src="docs/screenshots/chatbot-welcome.png" alt="Chatbot welcome state"></td>
+</tr>
+<tr>
+<td align="center"><sub>Landing page</sub></td>
+<td align="center"><sub>Chatbot — welcome state</sub></td>
+</tr>
+</table>
+
+<p align="center">
+<img src="docs/screenshots/chatbot-conversation.png" alt="Chatbot active conversation" width="70%">
+<br><sub>Chatbot — active conversation with live confidence scores</sub>
+</p>
+
+---
+
 ## ✨ Features
 
 **Core (internship requirements)**
@@ -42,7 +63,7 @@ Built as **Task 2** of the CodeAlpha AI Internship.
 | | |
 |---|---|
 | ✅ | FAQ collection stored in JSON — not hardcoded in source |
-| ✅ | Full NLP preprocessing pipeline: lowercasing → tokenization → punctuation removal → stopword removal → lemmatization (NLTK) |
+| ✅ | Full NLP preprocessing pipeline: lowercasing → tokenization → punctuation removal → stopword removal → stemming (NLTK, PorterStemmer) |
 | ✅ | TF-IDF vectorization + Cosine Similarity matching (Scikit-learn) |
 | ✅ | Smart fallback — never guesses an answer when confidence is too low |
 | ✅ | Clean, fully responsive chat interface (React + Tailwind CSS) |
@@ -53,7 +74,15 @@ Built as **Task 2** of the CodeAlpha AI Internship.
 |---|---|---|---|
 | 🌗 Dark / light mode | 📂 Category sidebar (9 categories, 43 FAQs) | 🔥 Trending questions | 💬 Session-persisted history |
 | 🎤 Voice input (STT) | 🔊 Text-to-Speech answers | 📋 Copy-to-clipboard | 📄 Export chat (TXT / PDF) |
-| 🔍 Keyword search | ⭐ Bookmark / favorite FAQs | 📊 Confidence score per answer | — |
+| 🔍 Keyword search | ⭐ Bookmark / favorite FAQs | 📊 Confidence score per answer | 🔗 Related follow-up questions |
+
+**Reliability & Testing**
+
+| | |
+|---|---|
+| ✅ | Evaluation suite (43 paraphrased + 8 out-of-domain test queries) — **86.0% core matching accuracy, 100% out-of-domain precision** |
+| ✅ | Rate limiting (20 requests/min per IP) on the chat endpoint |
+| ✅ | Structured request logging + lightweight in-memory usage metrics (`/api/stats`) |
 
 ---
 
@@ -63,7 +92,7 @@ Built as **Task 2** of the CodeAlpha AI Internship.
 |---|---|
 | **Frontend** | React 19, Vite, Tailwind CSS v4, Framer Motion, Axios, React Router |
 | **Backend** | Python, FastAPI, Uvicorn |
-| **NLP** | NLTK (tokenization, stopwords, lemmatization) |
+| **NLP** | NLTK (tokenization, stopwords, stemming) |
 | **ML** | Scikit-learn (TF-IDF Vectorizer, Cosine Similarity) |
 | **Data** | JSON (FAQ store) |
 | **PDF Export** | jsPDF |
@@ -161,7 +190,8 @@ Frontend runs at `http://localhost:5173`.
 | `GET` | `/api/faqs/categories` | Categories with FAQ counts |
 | `GET` | `/api/faqs/popular` | Trending / popular FAQs |
 | `GET` | `/api/faqs/suggested` | One suggested question per category |
-| `POST` | `/api/chat` | Send `{ "message": "..." }`, get matched answer + confidence |
+| `GET` | `/api/stats` | Lightweight usage metrics (total queries, match rate, avg confidence) |
+| `POST` | `/api/chat` | Send `{ "message": "..." }`, get matched answer + confidence + related questions. Rate limited to 20 requests/min per IP. |
 
 <details>
 <summary><strong>Example request / response</strong></summary>
@@ -180,7 +210,11 @@ curl -X POST http://127.0.0.1:8000/api/chat \
   "answer": "Overfitting occurs when a model learns the training data too well, including its noise and outliers, causing it to perform poorly on new, unseen data.",
   "question": "What is overfitting?",
   "category": "Machine Learning",
-  "confidence": 1.0
+  "confidence": 1.0,
+  "related_questions": [
+    { "id": 12, "question": "How do you prevent overfitting?", "category": "Machine Learning" },
+    { "id": 43, "question": "What is feature engineering?", "category": "Data Science" }
+  ]
 }
 ```
 </details>
@@ -206,10 +240,31 @@ VITE_API_BASE_URL=http://127.0.0.1:8000
 ## 🧠 How the Matching Works
 
 1. All FAQ questions are preprocessed once at startup and vectorized into a TF-IDF matrix.
-2. An incoming user message goes through the same preprocessing pipeline (lowercase → tokenize → remove punctuation → remove stopwords → lemmatize).
+2. An incoming user message goes through the same preprocessing pipeline (lowercase → tokenize → remove punctuation → remove stopwords → stem).
 3. The processed query is vectorized using the same fitted TF-IDF vectorizer.
 4. Cosine similarity is computed between the query vector and every FAQ vector.
 5. The highest-scoring FAQ is returned **only if** its similarity clears the configured threshold (default `0.25`) — otherwise the chatbot responds with a fallback message instead of guessing.
+
+---
+
+## 🧪 Testing & Evaluation
+
+The matching engine is validated with a dedicated evaluation script (`backend/tests/evaluate_matching.py`) covering 43 paraphrased queries (one per FAQ, not the literal stored question), 8 out-of-domain queries, and 4 known-limitation acronym cases:
+
+```bash
+cd backend
+python -m tests.evaluate_matching
+```
+
+| Metric | Result |
+|---|---|
+| Core matching accuracy | **86.0%** (37/43 paraphrased queries matched correctly) |
+| Out-of-domain precision | **100%** (8/8 irrelevant queries correctly rejected) |
+| Avg query response time | ~0.7ms |
+
+Two real preprocessing bugs were found and fixed using this suite (raising accuracy from 74.4% → 86.0%):
+- **Hyphen handling** — punctuation was being *deleted* rather than replaced with a space, silently merging words like `semi-supervised` → `semisupervised`.
+- **Lemmatization vs. stemming** — WordNet's lemmatizer doesn't recognize ML jargon like *"overfitting"* (it's a no-op), so `overfit` and `overfitting` never shared a token. Switching to `PorterStemmer` fixed this.
 
 ---
 

@@ -22,7 +22,7 @@ function ConfidenceBadge({ confidence, matched }) {
   );
 }
 
-export default function ChatBubble({ message }) {
+export default function ChatBubble({ message, onAskRelated, disabled }) {
   const isUser = message.role === "user";
   const [copied, setCopied] = useState(false);
   const [speaking, setSpeaking] = useState(false);
@@ -86,6 +86,27 @@ export default function ChatBubble({ message }) {
         >
           {message.text}
         </div>
+
+        {!isUser && !message.isError && message.relatedQuestions?.length > 0 && (
+          <div className="mt-1 max-w-full">
+            <p className="mb-1.5 text-xs text-muted">
+              {message.matched ? "You might also ask:" : "Did you mean:"}
+            </p>
+            <div className="flex flex-wrap gap-1.5">
+              {message.relatedQuestions.map((rq) => (
+                <button
+                  key={rq.id}
+                  onClick={() => onAskRelated?.(rq.question)}
+                  disabled={disabled}
+                  className="rounded-full border px-3 py-1 text-xs text-secondary transition-colors hover:border-brand-400 hover:text-brand-500 disabled:opacity-50"
+                  style={{ borderColor: "var(--border-strong)", backgroundColor: "var(--bg-subtle)" }}
+                >
+                  {rq.question}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
         <div className="flex items-center gap-2 px-1">
           <span className="text-xs text-muted">{formatTime(message.timestamp)}</span>
           {!isUser && !message.isError && (

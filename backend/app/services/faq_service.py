@@ -16,6 +16,15 @@ class FAQService:
         self.data_path = data_path
         self.faqs: List[dict] = self._load_faqs()
         self.matcher = FAQMatcher(self.faqs, similarity_threshold=similarity_threshold)
+        # Lightweight in-memory metrics (reset on restart). Not a replacement for a
+        # real analytics/monitoring stack, but enough to answer basic questions like
+        # "how many queries matched vs fell back?" without adding external services.
+        self._metrics = {
+            "total_queries": 0,
+            "matched_count": 0,
+            "unmatched_count": 0,
+            "confidence_sum": 0.0,
+        }
 
     def _load_faqs(self) -> List[dict]:
         if not self.data_path.exists():
@@ -61,8 +70,39 @@ class FAQService:
                 break
         return suggestions
 
+    def get_related_questions(self, query: str, exclude_id: Optional[int] = None, top_n: int = 3) -> List[dict]:
+        """
+        Return up to top_n candidate FAQs related to the query, excluding the
+        primary matched FAQ (if any). Useful both as "you might also ask" after
+        a successful match, and as "did you mean" suggestions after a fallback.
+        """
+        candidates = self.matcher.top_matches(query, top_n=top_n + 1)
+        related = [c for c in candidates if c.faq_id is not None and c.faq_id != exclude_id]
+        return [
+            {"id": c.faq_id, "question": c.question, "category": c.category, "confidence": c.confidence}
+            for c in related[:top_n]
+        ]
+
     def ask(self, query: str) -> MatchResult:
-        return self.matcher.match(query)
+        result = self.matcher.match(query)
+        self._metrics["total_queries"] += 1
+        if result.matched:
+            self._metrics["matched_count"] += 1
+        else:
+            self._metrics["unmatched_count"] += 1
+        self._metrics["confidence_sum"] += result.confidence
+        return result
+
+    def get_metrics(self) -> dict:
+        total = self._metrics["total_queries"]
+        avg_confidence = (self._metrics["confidence_sum"] / total) if total else 0.0
+        return {
+            "total_queries": total,
+            "matched_count": self._metrics["matched_count"],
+            "unmatched_count": self._metrics["unmatched_count"],
+            "match_rate": round(self._metrics["matched_count"] / total, 4) if total else 0.0,
+            "avg_confidence": round(avg_confidence, 4),
+        }
 
 
 # Singleton instance used across the app
