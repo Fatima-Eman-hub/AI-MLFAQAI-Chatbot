@@ -81,7 +81,7 @@ export default function Footer() {
           style={{ borderColor: "var(--border-subtle)" }}
         >
           <p>Built for CodeAlpha AI Internship &middot; Task 2 — FAQ Chatbot</p>
-          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4">
             <a
               href="https://github.com"
               target="_blank"
@@ -89,14 +89,6 @@ export default function Footer() {
               className="flex items-center gap-1.5 hover:text-brand-500"
             >
               <GithubIcon className="h-3.5 w-3.5" /> GitHub
-            </a>
-            <a
-              href="https://www.codealpha.tech"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 hover:text-brand-500"
-            >
-              <ExternalLink className="h-3.5 w-3.5" /> CodeAlpha
             </a>
           </div>
         </div>

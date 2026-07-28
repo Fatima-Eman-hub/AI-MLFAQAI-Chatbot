@@ -48,10 +48,9 @@ export default function About() {
         </h2>
 
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-secondary">
-          This FAQ Chatbot was built as Task 2 of the CodeAlpha AI Internship
-          program. It demonstrates real-world NLP techniques — not toy
-          examples — by implementing a full TF-IDF pipeline with proper text
-          preprocessing.
+          This FAQ Chatbot was built as a personal learning project. It
+          demonstrates real-world NLP techniques — not toy examples — by
+          implementing a full TF-IDF pipeline with proper text preprocessing.
         </p>
         <p className="mt-4 max-w-2xl text-lg leading-relaxed text-secondary">
           The backend runs NLTK for tokenization and lemmatization,

@@ -5,7 +5,7 @@
 
 **An NLP-powered chatbot that understands natural-language questions using TF-IDF vectorization and Cosine Similarity — no keyword matching, no hardcoded rules, no LLM API calls.**
 
-Built as **Task 2** of the CodeAlpha AI Internship.
+Built as a personal learning project.
 
 [![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
@@ -287,7 +287,7 @@ A complete project write-up — architecture, NLP matching design, API reference
 
 ## 🙏 Acknowledgments
 
-Built for the **CodeAlpha AI Internship — Task 2 (FAQ Chatbot)**.
+Built as a personal learning project — FAQ Chatbot.
 
 <div align="center">
 <sub>Made with TF-IDF, Cosine Similarity, and a lot of debugging 💜</sub>

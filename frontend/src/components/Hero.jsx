@@ -36,7 +36,7 @@ export default function Hero() {
           style={{ borderColor: "var(--border-strong)", backgroundColor: "var(--bg-subtle)" }}
         >
           <Sparkles className="h-3.5 w-3.5 text-brand-500" />
-          <span className="text-secondary">CodeAlpha AI Internship &middot; Task 2</span>
+          <span className="text-secondary">Personal Learning &middot; Task 2</span>
         </motion.div>
 
         <motion.h1
