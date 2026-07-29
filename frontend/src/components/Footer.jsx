@@ -35,8 +35,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-secondary">
-              An NLP-powered FAQ chatbot built for the CodeAlpha AI Internship
-              Task 2. Uses TF-IDF + Cosine Similarity for intelligent question
+              An NLP-powered FAQ chatbot built for learning purposes. Uses TF-IDF + Cosine Similarity for intelligent question
               matching.
             </p>
           </div>
@@ -80,7 +79,7 @@ export default function Footer() {
           className="mt-14 flex flex-col items-center justify-between gap-4 border-t pt-6 text-xs text-muted sm:flex-row"
           style={{ borderColor: "var(--border-subtle)" }}
         >
-          <p>Built for CodeAlpha AI Internship &middot; Task 2 — FAQ Chatbot</p>
+          <p>Built for Personal Experience — FAQ Chatbot</p>
             <div className="flex items-center gap-4">
             <a
               href="https://github.com"

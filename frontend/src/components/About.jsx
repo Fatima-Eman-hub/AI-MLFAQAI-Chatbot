@@ -42,7 +42,7 @@ export default function About() {
           About the project
         </span>
         <h2 className="mt-3 font-display text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
-          Built for an AI internship,
+          Built for an AI Experience,
           <br />
           <span className="text-secondary">designed for a portfolio.</span>
         </h2>

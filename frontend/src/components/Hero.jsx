@@ -28,16 +28,7 @@ export default function Hero() {
       />
 
       <div className="mx-auto max-w-4xl text-center">
-        <motion.div
-          initial={{ opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mb-8 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-medium"
-          style={{ borderColor: "var(--border-strong)", backgroundColor: "var(--bg-subtle)" }}
-        >
-          <Sparkles className="h-3.5 w-3.5 text-brand-500" />
-          <span className="text-secondary">Personal Learning &middot; Task 2</span>
-        </motion.div>
+       
 
         <motion.h1
           initial={{ opacity: 0, y: 12 }}
