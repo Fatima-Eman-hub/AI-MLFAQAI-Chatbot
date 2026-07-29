@@ -158,10 +158,10 @@ source venv/bin/activate     # macOS / Linux
 pip install -r requirements.txt
 cp .env.example .env         # Windows: copy .env.example .env
 
-uvicorn app.main:app --reload
+uvicorn app.main:app --reload --host 127.0.0.1 --port 8001
 ```
 
-Backend runs at `http://127.0.0.1:8000` — interactive API docs at `http://127.0.0.1:8000/docs`.
+Backend runs at `http://127.0.0.1:8001` — interactive API docs at `http://127.0.0.1:8001/docs`.
 
 ### 2. Frontend Setup
 
@@ -198,7 +198,7 @@ Frontend runs at `http://localhost:5173`.
 
 **Request**
 ```bash
-curl -X POST http://127.0.0.1:8000/api/chat \
+curl -X POST http://127.0.0.1:8001/api/chat \
   -H "Content-Type: application/json" \
   -d '{"message": "what is overfitting"}'
 ```
@@ -232,7 +232,7 @@ SIMILARITY_THRESHOLD=0.25
 
 **`frontend/.env`**
 ```env
-VITE_API_BASE_URL=http://127.0.0.1:8000
+VITE_API_BASE_URL=http://127.0.0.1:8001
 ```
 
 ---

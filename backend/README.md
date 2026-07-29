@@ -14,10 +14,10 @@ source venv/bin/activate     # macOS / Linux
 pip install -r requirements.txt
 cp .env.example .env
 
-uvicorn app.main:app --reload
+uvicorn app.main:app --reload --host 127.0.0.1 --port 8001
 ```
 
-Runs at `http://127.0.0.1:8000`. Interactive docs at `http://127.0.0.1:8000/docs`.
+Runs at `http://127.0.0.1:8001`. Interactive docs at `http://127.0.0.1:8001/docs`.
 
 ## Structure
 
