@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const CONTACT_CARDS = [
-  { icon: Mail, label: "Email", value: "your.email@example.com" },
-  { icon: GithubIcon, label: "GitHub", value: "github.com/Fatima-Eman-hub" },
+  { icon: Mail, label: "Email", value: "fatimaeman1724@gmail.com" },
+  { icon: GithubIcon, label: "GitHub", value: "https://github.com/Fatima-Eman-hub/" },
   { icon: MapPin, label: "Location", value: "Remote" },
 ];
 
